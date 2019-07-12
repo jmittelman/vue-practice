@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Howdy Pardner Messaging App</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ title }}</h1>
+
+      <section class="comments">
+        <comment-component
+          v-for="comment in comments"
+          :key="comment.name"
+          :name="comment.name"
+          :comment="comment.comment"
+        ></comment-component>
+      </section>
+
+      <input
+        v-model="mycomment"
+        v-on:keyup.enter="submit"
+        placeholder="Type Message Here"
+      />
+    </div>
+    <script>
+      const Comment = {
+        template: `
+          <article class="comment">
+      <div class="comment-body">
+        <div class="text">
+          <p>
+          {{comment}}
+          </p>
+        </div>
+        <p class="attribution">by <a href="#non">-{{name}}</a></p>
+      </div>
+    </article>`,
+        props: ["comment", "name"]
+      };
+
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            title: "Howdy, Parder",
+            comments: [
+              {
+                name: "old sumbitch",
+                comment:
+                  "What's this I hear you've been messin with the loose horses?"
+              },
+              {
+                name: "young fella",
+                comment: "I was looking for one that would ride"
+              },
+              {
+                name: "old sumbitch",
+                comment:
+                  "Well none of them escaped. You drawed lucky there, son. That could’ve pissed me off."
+              },
+              {
+                name: "young fella",
+                comment: "It didn't make me no nevermind if it did or didn't"
+              },
+              {
+                name: "big old gal",
+                comment:
+                  "You used to be sweet as pudding. Now you sure enough have a mouth on you"
+              },
+              {
+                name: "young fella",
+                comment:
+                  "Don't be sore. You're the dumb honyonkers drove me from the barn."
+              },
+              {
+                name: "big old gal",
+                comment:
+                  "Don't get huffy. You against conversation or something?"
+              }
+            ],
+            mycomment: ""
+          };
+        },
+        components: { "comment-component": Comment },
+        methods: {
+          submit() {
+            this.comments.push({
+              name: "old sumbitch",
+              comment: this.mycomment
+            });
+            this.mycomment = "";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
